@@ -1,8 +1,21 @@
 import rclpy
+import time
 from std_msgs.msg import Float64
 from my_interfaces.msg import Robot
 from threading import Thread
 from tkinter import Tk, Label, Scale, Button, HORIZONTAL
+
+# Define points here
+predefined_points = {
+    1: (103, 40, 40 ,0),
+    2: (103, 0, 40 ,0),
+    3: (103, 0, 40 ,90),
+    4: (103, 40, 40 ,90),
+    5: (0, 40, 40 ,90),
+    6: (0, 0, 60 ,90),
+    7: (0, 0, 60 ,0),
+    8: (103, 40, 40 ,0)
+}
 
 class JointManagerGUI:
     def __init__(self, master, node):
@@ -30,6 +43,12 @@ class JointManagerGUI:
         self.joint4_label.pack()
         self.joint4_scale.pack()
 
+        self.button1 = Button(master, text="Pick & Place", command=lambda: self.move_robot())
+        self.button1.pack()
+
+        self.button1 = Button(master, text="Go home", command=lambda: self.set_predefined_point(1))
+        self.button1.pack()
+
         self.send_button = Button(master, text="Move robot to selected position", command=self.send_joints)
         self.send_button.pack()
 
@@ -48,13 +67,20 @@ class JointManagerGUI:
         # Publish joint values to ROS 2 topic
         self.node.joint_publisher.publish(self.msg)
 
-        # Publish joint values to ROS 2 topic
-        joint_message = Float64()
-        joint_message.data = joint1_value
-        self.node.joint_publisher.publish(joint_message)
+    def set_predefined_point(self, point):
+        
+        if point in predefined_points:
+            joint1, joint2, joint3, joint4 = predefined_points[point]
+            self.joint1_scale.set(joint1)
+            self.joint2_scale.set(joint2)
+            self.joint3_scale.set(joint3)
+            self.joint4_scale.set(joint4)
+            self.send_joints()
 
-        joint_message.data = joint2_value
-        self.node.joint_publisher.publish(joint_message)
+    def move_robot(self):
+        for x in range(1,8):
+            self.set_predefined_point(x)
+            time.sleep(2)
 
 class JointManagerNode(Thread):
     def __init__(self):
