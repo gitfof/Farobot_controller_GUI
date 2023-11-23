@@ -7,14 +7,16 @@ from tkinter import Tk, Label, Scale, Button, HORIZONTAL
 
 # Define points here
 predefined_points = {
-    1: (103, 40, 40 ,0),
-    2: (103, 0, 40 ,0),
-    3: (103, 0, 40 ,90),
-    4: (103, 40, 40 ,90),
-    5: (0, 40, 40 ,90),
-    6: (0, 0, 60 ,90),
-    7: (0, 0, 60 ,0),
-    8: (103, 40, 40 ,0)
+    1: (140, 90, 90 ,0),
+    2: (140, 110, 20 ,0),
+    3: (140, 110, 20 ,90),
+    4: (140, 60, 90 ,90),
+    5: (10, 60, 90 ,90),
+    6: (10, 110, 90 ,90),
+    7: (10, 110, 20 ,90),
+    8: (10, 110, 20 ,0),
+    9: (10, 90, 90, 0),
+    10: (90, 80, 90, 0)
 }
 
 class JointManagerGUI:
@@ -46,7 +48,7 @@ class JointManagerGUI:
         self.button1 = Button(master, text="Pick & Place", command=lambda: self.move_robot())
         self.button1.pack()
 
-        self.button1 = Button(master, text="Go home", command=lambda: self.set_predefined_point(1))
+        self.button1 = Button(master, text="Go home", command=lambda: self.set_predefined_point(10))
         self.button1.pack()
 
         self.send_button = Button(master, text="Move robot to selected position", command=self.send_joints)
@@ -78,7 +80,7 @@ class JointManagerGUI:
             self.send_joints()
 
     def move_robot(self):
-        for x in range(1,8):
+        for x in range(1,10):
             self.set_predefined_point(x)
             time.sleep(2)
 
