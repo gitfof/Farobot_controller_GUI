@@ -29,12 +29,12 @@ class JointManagerGUI:
         self.joint1_scale.pack()
 
         self.joint2_label = Label(master, text="Váll (Joint 2)")
-        self.joint2_scale = Scale(master, from_=0, to=100, orient=HORIZONTAL)
+        self.joint2_scale = Scale(master, from_=40, to=150, orient=HORIZONTAL)
         self.joint2_label.pack()
         self.joint2_scale.pack()
 
         self.joint3_label = Label(master, text="Könyök (Joint 3)")
-        self.joint3_scale = Scale(master, from_=0, to=90, orient=HORIZONTAL)
+        self.joint3_scale = Scale(master, from_=20, to=110, orient=HORIZONTAL)
         self.joint3_label.pack()
         self.joint3_scale.pack()
 
